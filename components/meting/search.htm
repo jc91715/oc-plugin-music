@@ -5,6 +5,7 @@
         <th scope="col">#</th>
         <th scope="col">歌曲名字</th>
         <th scope="col">演唱者</th>
+        <th scope="col">来源</th>
         <th scope="col">播放</th>
     </tr>
     </thead>
@@ -14,6 +15,7 @@
         <th scope="row">{{key+1}}</th>
         <td>{{item.name}}</td>
         <td>{{item.artist}}</td>
+        <td>网易</td>
         <td>
             <form  data-request="onAudio" data-request-success="window.open(data.url, '_blank'); ">
                 <input type="hidden" name="id" value="{{item.id}}">
