@@ -57,9 +57,8 @@ class Meting extends ComponentBase
             $ifDisplayNextPage=false;
         }
         $this->page['search']= $search;
-        $this->page['page']= $page;
-        $page++;
-        $this->page['nextPage']= $page;
+        $this->page['page']= $page-1;
+        $this->page['nextPage']= $page+1;
         $this->page['ifDisplayNextPage']= $ifDisplayNextPage;
         $this->page['items']= $data;
         \Flash::success('获取数据成功');
