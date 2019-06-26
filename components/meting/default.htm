@@ -1,0 +1,41 @@
+{% put styles %}
+<style>
+    .box{
+        margin-top: 50px;
+    }
+</style>
+{% endput %}
+<div class="popup-backdrop fade in loading custom-loading" style="display: none"><div class="modal-content popup-loading-indicator"></div></div>
+<div class="container box" >
+    <div class="row">
+        <!--{% flash %}-->
+        <!--<div class="alert alert-{{ type == 'error' ? 'danger' : type }}">-->
+            <!--{{ message }}-->
+            <!--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>-->
+        <!--</div>-->
+        <!--{% endflash %}-->
+        <div class="col-md-offset-3 col-md-6">
+            <form class="form-inline" data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="inputPassword2" class="sr-only">Password</label>
+                    <input type="text" name="search" class="form-control" id="inputPassword2" placeholder="请输入搜索内容">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>搜索</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-9">
+            <div id="audio">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-9">
+            <div id="search">
+
+            </div>
+        </div>
+    </div>
+</div>

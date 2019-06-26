@@ -1,0 +1,52 @@
+
+<table class="table table-dark">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">歌曲名字</th>
+        <th scope="col">演唱者</th>
+        <th scope="col">播放</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for key,item in items %}
+    <tr>
+        <th scope="row">{{key+1}}</th>
+        <td>{{item.name}}</td>
+        <td>{{item.artist}}</td>
+        <td>
+            <form  data-request="onAudio" data-request-success="window.open(data.url, '_blank'); ">
+                <input type="hidden" name="id" value="{{item.id}}">
+                <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>播放</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% if page==1 %}
+        <button type="submit" disabled class="btn btn-primary mb-2" style="float: left">上一页</button>
+        {% if ifDisplayNextPage %}
+        <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'">
+            <input type="hidden" name="page" value="{{nextPage}}">
+            <input type="hidden" name="search" value="{{search}}">
+            <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash style="float: right">下一页</button>
+        </form>
+        {% endif %}
+{% else %}
+    <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'"  style="float: left">
+        <input type="hidden" name="page" value="{{page}}">
+        <input type="hidden" name="search" value="{{search}}">
+        <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>上一页</button>
+    </form>
+    {% if ifDisplayNextPage %}
+        <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'" style="float: right">
+            <input type="hidden"  name="page" value="{{nextPage}}">
+            <input type="hidden" name="search" value="{{search}}">
+            <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>下一页</button>
+        </form>
+    {% else %}
+        <button type="submit" disabled class="btn btn-primary mb-2" data-attach-loading data-request-flash style="float: right">下一页</button>
+    {% endif %}
+{% endif %}
