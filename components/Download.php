@@ -28,7 +28,7 @@ class Download extends ComponentBase
     {
         $type=$this->param('type');
         $id=$this->param('id');
-
+        header('Cache-Control: max-age=3600*24');
         switch ($type){
             case 'mp3':
                 $this->downMusic($id);
