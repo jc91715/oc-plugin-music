@@ -26,17 +26,17 @@ class Meting extends ComponentBase
     public function onRun()
     {
 
-//       $api = new Met('netease');
+       $api = new Met('netease');
 // Use custom cookie (option)
 // $api->cookie('paste your cookie');
 
 // Get data
-//        $data = $api->format(true)->search('朋友', [
-//            'page' => 1,
-//            'limit' => 50
-//        ]);
+        $data = $api->format(true)->search('朋友', [
+            'page' => 1,
+            'limit' => 50
+        ]);
 //        $data= $api->format(true)->url(26397012);
-//        echo $data;
+        echo $data;
     }
 
     public function onSearch()

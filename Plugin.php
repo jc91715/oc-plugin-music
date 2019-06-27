@@ -53,6 +53,7 @@ class Plugin extends PluginBase
 
         return [
             'Jc91715\Music\Components\Meting' => 'Meting',
+            'Jc91715\Music\Components\Download' => 'Download',
         ];
     }
 

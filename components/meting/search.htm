@@ -1,4 +1,5 @@
 
+
 <table class="table table-dark">
     <thead>
     <tr>
@@ -6,7 +7,7 @@
         <th scope="col">歌曲名字</th>
         <th scope="col">演唱者</th>
         <th scope="col">来源</th>
-        <th scope="col">播放</th>
+        <th scope="col">操作</th>
     </tr>
     </thead>
     <tbody>
@@ -21,6 +22,8 @@
                 <input type="hidden" name="id" value="{{item.id}}">
                 <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>播放</button>
             </form>
+            <a href="/music/{{item.id}}?file_name={{item.name}}" class="btn btn-primary mb-2">下载</a>
+
         </td>
     </tr>
     {% endfor %}
