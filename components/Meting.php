@@ -2,10 +2,13 @@
 
 use Cms\Classes\ComponentBase;
 use Metowolf\Meting as Met;
+use Cms\Classes\Page;
 
 class Meting extends ComponentBase
 {
     protected $api;
+    protected $downPage;
+
     public function componentDetails()
     {
         return [
@@ -21,21 +24,28 @@ class Meting extends ComponentBase
     public function init()
     {
        $this->api = new Met('netease');
+       $this->downPage = 'download';
     }
 
     public function onRun()
     {
+        $this->addCss('assets/css/APlayer.min.css');
+        $this->addJs('assets/js/APlayer.min.js');
 
-//       $api = new Met('netease');
+
+
+       $api = new Met('netease');
 //// Use custom cookie (option)
 //// $api->cookie('paste your cookie');
 //
 //// Get data
 //        $data = $api->format(true)->search('朋友', [
 //            'page' => 1,
-//            'limit' => 50
+//            'limit' => 10
 //        ]);
-////        $data= $api->format(true)->url(26397012);
+//        $data= $api->format(true)->url(152428);
+//        $data= $api->format(true)->pic(152428);
+//        $data= $api->format(true)->lyric(152428);
 //        echo $data;
     }
 
@@ -48,8 +58,17 @@ class Meting extends ComponentBase
             'limit' => 10
         ]);
         $data=json_decode($data,true);
+        $musics = [];
+
         foreach ($data as &$v){
             $v['artist'] = implode(',',$v['artist']);
+            $music=[];
+            $music['name']= $v['name'];
+            $music['artist']= $v['artist'];
+            $music['url']= Page::url($this->downPage,['id'=>$v['id'],'type'=>'mp3']);
+            $music['lrc']= Page::url($this->downPage,['id'=>$v['id'],'type'=>'lrc']);
+            $music['cover']= Page::url($this->downPage,['id'=>$v['id'],'type'=>'img']);
+            $musics[]=$music;
         }
         $count=count($data);
         $ifDisplayNextPage=true;
@@ -61,8 +80,8 @@ class Meting extends ComponentBase
         $this->page['nextPage']= $page+1;
         $this->page['ifDisplayNextPage']= $ifDisplayNextPage;
         $this->page['items']= $data;
-        \Flash::success('获取数据成功');
-//        $this->renderPartial('search');
+        $this->page['musics']= json_encode($musics);
+
 
     }
 

@@ -56,3 +56,23 @@
         <button type="submit" disabled class="btn btn-primary mb-2" data-attach-loading data-request-flash style="float: right">下一页</button>
     {% endif %}
 {% endif %}
+
+
+<script>
+    var ap = new APlayer({
+        container: document.getElementById('aplayer'),
+        mini: false,
+        autoplay: false,
+        theme: '#FADFA3',
+        loop: 'all',
+        order: 'random',
+        preload: 'auto',
+        volume: 0.7,
+        mutex: true,
+        listFolded: false,
+        listMaxHeight: 90,
+        lrcType: 3,
+        audio: {{musics|raw}}
+    });
+</script>
+
