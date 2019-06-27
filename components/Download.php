@@ -21,7 +21,15 @@ class Download extends ComponentBase
 
     public function init()
     {
-        $this->api = new Met('netease');
+
+        $suppose = array('netease', 'tencent', 'xiami', 'kugou', 'baidu');
+        $pingtai = request()->get('pingtai','netease');
+        if(!in_array($pingtai,$suppose)){
+            $pingtai='netease';
+        }
+
+
+        $this->api = new Met($pingtai);
     }
 
     public function onRun()

@@ -8,6 +8,11 @@ class Meting extends ComponentBase
 {
     protected $api;
     protected $downPage;
+    protected $pingTai;
+
+    public static $sourceMaps= [
+        'netease'=>'网易', 'tencent'=>'腾讯', 'xiami'=>'虾米', 'kugou'=>'酷狗', 'baidu'=>'百度'];
+
 
     public function componentDetails()
     {
@@ -19,12 +24,33 @@ class Meting extends ComponentBase
 
     public function defineProperties()
     {
-        return [];
+        return [
+            'downPage' => [
+                'title' => '下载页',
+                'type' => 'dropdown',
+                'default' => 'download'
+            ],
+        ];
+    }
+    public function getDownPageOptions()
+    {
+        return Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
     }
     public function init()
     {
-       $this->api = new Met('netease');
-       $this->downPage = 'download';
+        $suppose = array('netease', 'tencent', 'xiami', 'kugou', 'baidu');
+
+        $pingtai = request()->get('pingtai','netease');
+        if(!in_array($pingtai,$suppose)){
+            $pingtai='netease';
+        }
+
+       $this->api = new Met($pingtai);
+       $this->downPage = $this->property('downPage');
+       $this->pingTai = $pingtai;
+       $this->page['downPage'] = $this->property('downPage');
+       $this->page['pingtai'] = $pingtai;
+
     }
 
     public function onRun()
@@ -34,7 +60,7 @@ class Meting extends ComponentBase
 
 
 
-       $api = new Met('netease');
+//       $api = new Met('netease');
 //// Use custom cookie (option)
 //// $api->cookie('paste your cookie');
 //
@@ -51,8 +77,11 @@ class Meting extends ComponentBase
 
     public function onSearch()
     {
+
         $search=post('search');
         $page = request()->get('page',1);
+
+
         $data = $this->api->format(true)->search($search, [
             'page' => $page,
             'limit' => 10
@@ -62,12 +91,13 @@ class Meting extends ComponentBase
 
         foreach ($data as &$v){
             $v['artist'] = implode(',',$v['artist']);
+            $v['source'] = self::$sourceMaps[ $v['source']];
             $music=[];
             $music['name']= $v['name'];
             $music['artist']= $v['artist'];
-            $music['url']= Page::url($this->downPage,['id'=>$v['id'],'type'=>'mp3']);
-            $music['lrc']= Page::url($this->downPage,['id'=>$v['id'],'type'=>'lrc']);
-            $music['cover']= Page::url($this->downPage,['id'=>$v['id'],'type'=>'img']);
+            $music['url']= Page::url($this->downPage,['id'=>$v['id'],'type'=>'mp3']).'?pingtai='.$this->pingTai;
+            $music['lrc']= Page::url($this->downPage,['id'=>$v['id'],'type'=>'lrc']).'?pingtai='.$this->pingTai;
+            $music['cover']= Page::url($this->downPage,['id'=>$v['id'],'type'=>'img']).'?pingtai='.$this->pingTai;
             $musics[]=$music;
         }
         $count=count($data);
