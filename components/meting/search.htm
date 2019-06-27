@@ -1,4 +1,28 @@
-
+{% if page==0 %}
+    <button type="submit" disabled class="btn btn-primary mb-2" style="float: left">上一页</button>
+    {% if ifDisplayNextPage %}
+        <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'">
+            <input type="hidden" name="page" value="{{nextPage}}">
+            <input type="hidden" name="search" value="{{search}}">
+            <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash style="float: right">下一页</button>
+        </form>
+    {% endif %}
+{% else %}
+    <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'"  style="float: left">
+        <input type="hidden" name="page" value="{{page}}">
+        <input type="hidden" name="search" value="{{search}}">
+        <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>上一页</button>
+    </form>
+    {% if ifDisplayNextPage %}
+        <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'" style="float: right">
+            <input type="hidden"  name="page" value="{{nextPage}}">
+            <input type="hidden" name="search" value="{{search}}">
+            <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>下一页</button>
+        </form>
+    {% else %}
+        <button type="submit" disabled class="btn btn-primary mb-2" data-attach-loading data-request-flash style="float: right">下一页</button>
+    {% endif %}
+{% endif %}
 
 <table class="table table-dark">
     <thead>
@@ -31,31 +55,7 @@
     </tbody>
 </table>
 
-{% if page==0 %}
-        <button type="submit" disabled class="btn btn-primary mb-2" style="float: left">上一页</button>
-        {% if ifDisplayNextPage %}
-        <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'">
-            <input type="hidden" name="page" value="{{nextPage}}">
-            <input type="hidden" name="search" value="{{search}}">
-            <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash style="float: right">下一页</button>
-        </form>
-        {% endif %}
-{% else %}
-    <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'"  style="float: left">
-        <input type="hidden" name="page" value="{{page}}">
-        <input type="hidden" name="search" value="{{search}}">
-        <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>上一页</button>
-    </form>
-    {% if ifDisplayNextPage %}
-        <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'" style="float: right">
-            <input type="hidden"  name="page" value="{{nextPage}}">
-            <input type="hidden" name="search" value="{{search}}">
-            <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>下一页</button>
-        </form>
-    {% else %}
-        <button type="submit" disabled class="btn btn-primary mb-2" data-attach-loading data-request-flash style="float: right">下一页</button>
-    {% endif %}
-{% endif %}
+
 
 
 <script>
