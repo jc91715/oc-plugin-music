@@ -65,7 +65,8 @@ class Download extends ComponentBase
         $path_parts  = pathinfo($url);
         $fileName= $path_parts['basename'];
         if(request()->get('file_name')){
-            $fileName= request()->get('file_name').'.'.$path_parts['extension'];
+            $fileName= request()->get('file_name').'.mp3';
+//            $fileName= request()->get('file_name').'.'.$path_parts['extension'];
         }
 
         header("Content-type:audio/mpeg");
