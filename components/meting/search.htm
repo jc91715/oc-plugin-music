@@ -18,11 +18,12 @@
         <td>{{item.artist}}</td>
         <td>网易</td>
         <td>
-            <form  data-request="onAudio" data-request-success="window.open(data.url, '_blank'); ">
+            <form class="form-inline" data-request="onAudio" data-request-success="window.open(data.url, '_blank'); ">
                 <input type="hidden" name="id" value="{{item.id}}">
                 <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>播放</button>
+                <a href="/music/{{item.id}}?file_name={{item.name}}" class="btn btn-primary mb-2 "  >下载</a>
             </form>
-            <a href="/music/{{item.id}}?file_name={{item.name}}" class="btn btn-primary mb-2">下载</a>
+
 
         </td>
     </tr>
