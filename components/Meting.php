@@ -30,11 +30,26 @@ class Meting extends ComponentBase
                 'type' => 'dropdown',
                 'default' => 'download'
             ],
+            'limit'=>[
+                'title' => '每一页显示',
+                'type' => 'dropdown',
+                'default' => '10'
+            ]
         ];
     }
     public function getDownPageOptions()
     {
         return Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
+    }
+
+    public function getLimitOptions()
+    {
+        $arr=[];
+
+        foreach (range(1,50) as $v1){
+            $arr[$v1]=$v1;
+        }
+        return $arr;
     }
     public function init()
     {
@@ -84,7 +99,7 @@ class Meting extends ComponentBase
 
         $data = $this->api->format(true)->search($search, [
             'page' => $page,
-            'limit' => 10
+            'limit' => $this->property('limit')
         ]);
         $data=json_decode($data,true);
         $musics = [];
@@ -102,7 +117,7 @@ class Meting extends ComponentBase
         }
         $count=count($data);
         $ifDisplayNextPage=true;
-        if($count<10){
+        if($count<$this->property('limit')){
             $ifDisplayNextPage=false;
         }
         $this->page['search']= $search;
