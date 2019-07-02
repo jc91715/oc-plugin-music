@@ -1,9 +1,9 @@
 <?php namespace Jc91715\Music\Components;
 
 use Cms\Classes\ComponentBase;
-
-
+use Cms\Classes\Page;
 use Jc91715\Music\Classes\MusicAdapterInterface;
+
 class Meting extends ComponentBase
 {
     protected $api;
