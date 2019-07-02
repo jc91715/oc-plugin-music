@@ -33,7 +33,7 @@ class Plugin extends PluginBase
      */
     public function register()
     {
-        app()->bind(MusicAdapterInterface::class,function (){
+        app()->singleton(MusicAdapterInterface::class,function (){
             return new MetAdapter();
         });
         app()->bind(MusicInterface::class,function (){

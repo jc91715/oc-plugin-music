@@ -1,17 +1,22 @@
 <?php namespace Jc91715\Music\Components;
 
 use Cms\Classes\ComponentBase;
-use Metowolf\Meting as Met;
-use Cms\Classes\Page;
 
+
+use Jc91715\Music\Classes\MusicAdapterInterface;
 class Meting extends ComponentBase
 {
     protected $api;
     public $downPage;
     public $pingTai;
 
-    public static $sourceMaps= [
-        'netease'=>'网易', 'tencent'=>'腾讯', 'xiami'=>'虾米', 'kugou'=>'酷狗', 'baidu'=>'百度'];
+    public $search;
+    public $page;
+    public $nextPage;
+    public $ifDisplayNextPage;
+    public $musics;
+
+
 
 
     public function componentDetails()
@@ -53,16 +58,10 @@ class Meting extends ComponentBase
     }
     public function init()
     {
-        $suppose = array('netease', 'tencent', 'xiami', 'kugou', 'baidu');
 
-        $pingtai = request()->get('pingtai','netease');
-        if(!in_array($pingtai,$suppose)){
-            $pingtai='netease';
-        }
-
-       $this->api = new Met($pingtai);
        $this->downPage = $this->property('downPage');
-       $this->pingTai = $pingtai;
+       $this->api = app(MusicAdapterInterface::class);
+       $this->pingTai =  $this->api->getPingtai();
 
     }
 
@@ -93,38 +92,29 @@ class Meting extends ComponentBase
 
         $search=post('search');
         $page = request()->get('page',1);
-
-
-        $data = $this->api->format(true)->search($search, [
+        $options = [
             'page' => $page,
             'limit' => $this->property('limit')
-        ]);
-        $data=json_decode($data,true);
-        $musics = [];
+        ];
+        $data = $this->api->search($search,$options);
+        $musics = $this->api->transformSearchData($data,$this->downPage);
 
-        foreach ($data as &$v){
-            $v['artist'] = implode(',',$v['artist']);
-            $v['source'] = self::$sourceMaps[ $v['source']];
-            $music=[];
-            $music['name']= $v['name'];
-            $music['artist']= $v['artist'];
-            $music['url']= Page::url($this->downPage,['id'=>$v['id'],'type'=>'mp3']).'?pingtai='.$this->pingTai;
-            $music['lrc']= Page::url($this->downPage,['id'=>$v['id'],'type'=>'lrc']).'?pingtai='.$this->pingTai;
-            $music['cover']= Page::url($this->downPage,['id'=>$v['id'],'type'=>'img']).'?pingtai='.$this->pingTai;
-            $musics[]=$music;
-        }
-        $count=count($data);
+        //是否显示下一页
+        $count=count($musics);
         $ifDisplayNextPage=true;
         if($count<$this->property('limit')){
             $ifDisplayNextPage=false;
         }
-        $this->page['search']= $search;
-        $this->page['page']= $page-1;
-        $this->page['nextPage']= $page+1;
-        $this->page['ifDisplayNextPage']= $ifDisplayNextPage;
-        $this->page['items']= $data;
-        $this->page['musics']= json_encode($musics);
 
+        $this->search= $search;
+        //上一页
+        $this->page= $page-1;
+        //下一页
+        $this->nextPage= $page+1;
+        $this->ifDisplayNextPage= $ifDisplayNextPage;
+
+        //音乐数据
+        $this->musics= $musics;
 
     }
 

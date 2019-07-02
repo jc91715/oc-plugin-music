@@ -6,24 +6,24 @@
         <button type="submit" disabled class="btn btn-primary mb-2" style="float: left">上一页</button>
         {% if ifDisplayNextPage %}
         <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'">
-            <input type="hidden" name="page" value="{{nextPage}}">
-            <input type="hidden" name="search" value="{{search}}">
-            <input type="hidden" name="pingtai" value="{{pingtai}}">
+            <input type="hidden" name="page" value="{{ __SELF__nextPage}}">
+            <input type="hidden" name="search" value="{{ __SELF__search}}">
+            <input type="hidden" name="pingtai" value="{{ __SELF__pingtai}}">
             <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash style="float: right">下一页</button>
         </form>
         {% endif %}
         {% else %}
         <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'"  style="float: left">
-            <input type="hidden" name="page" value="{{page}}">
-            <input type="hidden" name="search" value="{{search}}">
-            <input type="hidden" name="pingtai" value="{{pingtai}}">
+            <input type="hidden" name="page" value="{{ __SELF__page}}">
+            <input type="hidden" name="search" value="{{ __SELF__search}}">
+            <input type="hidden" name="pingtai" value="{{ __SELF__pingtai}}">
             <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>上一页</button>
         </form>
         {% if ifDisplayNextPage %}
         <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'" style="float: right">
-            <input type="hidden"  name="page" value="{{nextPage}}">
-            <input type="hidden" name="search" value="{{search}}">
-            <input type="hidden" name="pingtai" value="{{pingtai}}">
+            <input type="hidden"  name="page" value="{{ __SELF__nextPage}}">
+            <input type="hidden" name="search" value="{{ __SELF__search}}">
+            <input type="hidden" name="pingtai" value="{{ __SELF__pingtai}}">
             <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>下一页</button>
         </form>
         {% else %}
@@ -46,7 +46,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for key,item in items %}
+            {% for key,item in __SELF__.musics %}
             <tr>
                 <th scope="row">{{key+1}}</th>
                 <td>{{item.name}}</td>
@@ -56,8 +56,8 @@
                     <form class="form-inline" data-request="onAudio" data-request-success="window.open(data.url, '_blank'); ">
                         <input type="hidden" name="id" value="{{item.id}}">
                         <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>播放</button>
-                        <a href="{{__SELF__.downPage|page({id:item.id })}}?file_name={{item.name}}&pingtai={{__SELF__.pingTai}}" class="btn btn-primary mb-2 "  >下载</a>
-                        <a  href="{{__SELF__.downPage|page({id:item.id,type:'lrc' })}}?pingtai={{__SELF__.pingTai}}" class="btn btn-primary mb-2" target="_blank">歌词下载</a>
+                        <a href="{{item.url}}" class="btn btn-primary mb-2 ">下载</a>
+                        <a  href="{{item.lrc}}" class="btn btn-primary mb-2" target="_blank">歌词下载</a>
                     </form>
 
 
@@ -87,7 +87,7 @@
         listFolded: false,
         listMaxHeight: 90,
         lrcType: 3,
-        audio: {{musics|raw}}
+        audio: {{__SELF__.musics|json_encode()|raw}}
     });
 </script>
 

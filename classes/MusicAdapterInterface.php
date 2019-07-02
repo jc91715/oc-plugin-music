@@ -13,8 +13,11 @@ interface MusicAdapterInterface
 {
 
 
-    public function mp3Url($id);
-    public function imgUrl($id);
-    public function lrcData($id);
+    public function mp3Url($id,$state);
+    public function imgUrl($id,$state);
+    public function lrcData($id,$state);
+    public function getPingtai();
+    public function search($search,$options);
+    public function transformSearchData($data,$downPage);
 
 }
