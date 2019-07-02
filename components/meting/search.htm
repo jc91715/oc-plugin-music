@@ -8,7 +8,7 @@
                 <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'">
                     <input type="hidden" name="page" value="{{ __SELF__.nextPage}}">
                     <input type="hidden" name="search" value="{{ __SELF__.search}}">
-                    <input type="hidden" name="pingtai" value="{{ __SELF__.pingtai}}">
+                    <input type="hidden" name="pingtai" value="{{ __SELF__.pingTai}}">
                     <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash style="float: right">下一页</button>
                 </form>
             {% endif %}
@@ -16,14 +16,14 @@
             <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'"  style="float: left">
                 <input type="hidden" name="page" value="{{ __SELF__.page}}">
                 <input type="hidden" name="search" value="{{ __SELF__.search}}">
-                <input type="hidden" name="pingtai" value="{{ __SELF__.pingtai}}">
+                <input type="hidden" name="pingtai" value="{{ __SELF__.pingTai}}">
                 <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>上一页</button>
             </form>
             {% if __SELF__.ifDisplayNextPage %}
                 <form  data-request="onSearch" data-request-update="'{{ __SELF__ }}::search': '#search'" style="float: right">
                     <input type="hidden"  name="page" value="{{ __SELF__.nextPage}}">
                     <input type="hidden" name="search" value="{{ __SELF__.search}}">
-                    <input type="hidden" name="pingtai" value="{{ __SELF__.pingtai}}">
+                    <input type="hidden" name="pingtai" value="{{ __SELF__.pingTai}}">
                     <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>下一页</button>
                 </form>
             {% else %}
