@@ -7,8 +7,8 @@ use Cms\Classes\Page;
 class Meting extends ComponentBase
 {
     protected $api;
-    protected $downPage;
-    protected $pingTai;
+    public $downPage;
+    public $pingTai;
 
     public static $sourceMaps= [
         'netease'=>'网易', 'tencent'=>'腾讯', 'xiami'=>'虾米', 'kugou'=>'酷狗', 'baidu'=>'百度'];
@@ -63,8 +63,6 @@ class Meting extends ComponentBase
        $this->api = new Met($pingtai);
        $this->downPage = $this->property('downPage');
        $this->pingTai = $pingtai;
-       $this->page['downPage'] = $this->property('downPage');
-       $this->page['pingtai'] = $pingtai;
 
     }
 
@@ -130,14 +128,4 @@ class Meting extends ComponentBase
 
     }
 
-    public function onAudio()
-    {
-        $id=post('id');
-        $data=  $this->api->format(true)->url($id);
-
-        $data=json_decode($data,true);
-
-
-        return $data;
-    }
 }

@@ -56,8 +56,8 @@
                     <form class="form-inline" data-request="onAudio" data-request-success="window.open(data.url, '_blank'); ">
                         <input type="hidden" name="id" value="{{item.id}}">
                         <button type="submit" class="btn btn-primary mb-2" data-attach-loading data-request-flash>播放</button>
-                        <a href="{{downPage|page({id:item.id })}}?file_name={{item.name}}&pingtai={{pingtai}}" class="btn btn-primary mb-2 "  >下载</a>
-                        <a  href="{{downPage|page({id:item.id,type:'lrc' })}}?pingtai={{pingtai}}" class="btn btn-primary mb-2" target="_blank">歌词下载</a>
+                        <a href="{{__SELF__.downPage|page({id:item.id })}}?file_name={{item.name}}&pingtai={{__SELF__.pingTai}}" class="btn btn-primary mb-2 "  >下载</a>
+                        <a  href="{{__SELF__.downPage|page({id:item.id,type:'lrc' })}}?pingtai={{__SELF__.pingTai}}" class="btn btn-primary mb-2" target="_blank">歌词下载</a>
                     </form>
 
 

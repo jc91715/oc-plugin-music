@@ -2,7 +2,10 @@
 
 use Backend;
 use System\Classes\PluginBase;
-
+use Jc91715\Music\Classes\MusicAdapterInterface;
+use Jc91715\Music\Classes\MetAdapter;
+use Jc91715\Music\Classes\MusicInterface;
+use Jc91715\Music\Classes\Music;
 /**
  * music Plugin Information File
  */
@@ -30,6 +33,12 @@ class Plugin extends PluginBase
      */
     public function register()
     {
+        app()->bind(MusicAdapterInterface::class,function (){
+            return new MetAdapter();
+        });
+        app()->bind(MusicInterface::class,function (){
+            return new Music();
+        });
 
     }
 
